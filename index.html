@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simar Saka - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0e27;
+            --bg-secondary: #1a1f3a;
+            --accent: #00d4ff;
+            --accent-glow: rgba(0, 212, 255, 0.3);
+            --text-primary: #ffffff;
+            --text-secondary: #b4b4c5;
+            --card-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 20px 0;
+            box-shadow: 0 2px 20px rgba(0, 212, 255, 0.1);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 80px;
+            position: relative;
+        }
+
+        .hero-content {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .profile-image {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 5px solid var(--accent);
+            box-shadow: 0 0 30px var(--accent-glow);
+            margin-bottom: 30px;
+            animation: fadeIn 1s ease;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--accent), #00fff2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-content .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero-content .description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 40px;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg-primary);
+            box-shadow: 0 5px 20px var(--accent-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px var(--accent-glow);
+        }
+
+        .btn-secondary {
+            border: 2px solid var(--accent);
+            color: var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent);
+            color: var(--bg-primary);
+            transform: translateY(-3px);
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 60px;
+            color: var(--accent);
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+            margin: 20px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Experience */
+        .experience-grid {
+            display: grid;
+            gap: 30px;
+        }
+
+        .experience-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 212, 255, 0.1);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .experience-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--accent);
+            transform: scaleY(0);
+            transition: transform 0.3s;
+        }
+
+        .experience-card:hover:before {
+            transform: scaleY(1);
+        }
+
+        .experience-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px var(--accent-glow);
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 20px;
+        }
+
+        .experience-title {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 5px;
+        }
+
+        .experience-company {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+        }
+
+        .experience-date {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .experience-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .experience-card li {
+            padding-left: 25px;
+            margin-bottom: 10px;
+            position: relative;
+            color: var(--text-secondary);
+        }
+
+        .experience-card li:before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        /* Projects */
+.projects-grid {
+    display: grid;
+    grid-template-columns: 1fr;   /* single-column full-width layout */
+    gap: 30px;
+    width: 100%;
+}
+
+.project-card {
+    background: var(--card-bg);
+    border-radius: 15px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 212, 255, 0.1);
+    transition: all 0.3s;
+    width: 100%;
+}
+
+/* Featured projects should still span full width safely */
+.project-card.featured {
+    grid-column: 1 / -1;          /* SAFE replacement for span 2 */
+}
+
+.project-image {
+    width: 100%;
+    height: 240px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.project-card.featured .project-image {
+    height: 320px;
+}
+
+.project-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    transition: left 0.5s;
+}
+
+.project-card:hover .project-image::before {
+    left: 100%;
+}
+
+.project-content {
+    padding: 30px;
+}
+
+.project-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--accent);
+    box-shadow: 0 15px 40px var(--accent-glow);
+}
+
+.project-title {
+    font-size: 1.4rem;
+    color: var(--accent);
+    margin-bottom: 15px;
+}
+
+.project-description {
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.project-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.project-link:hover {
+    color: #00fff2;
+}
+
+        /* Skills */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .skill-category {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 212, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .skill-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .skill-category h3 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .skill-category ul {
+            list-style: none;
+        }
+
+        .skill-category li {
+            padding: 8px 0;
+            color: var(--text-secondary);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .skill-category li:before {
+            content: '●';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        .skill-category li:last-child {
+            border-bottom: none;
+        }
+
+        /* Education */
+        .education-grid {
+            display: grid;
+            gap: 30px;
+        }
+
+        .education-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 212, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            transition: all 0.3s;
+        }
+
+        .education-card:hover {
+            transform: translateX(10px);
+            border-color: var(--accent);
+        }
+
+        .education-info h3 {
+            color: var(--accent);
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        .education-details {
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+/* Stats / Mindset Section */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 30px;
+    margin-bottom: 60px;
+    align-items: stretch;
+}
+
+/* Card */
+.stat-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 34px 28px;
+    text-align: center;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 212, 255, 0.14);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle top accent line */
+.stat-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    opacity: 0.65;
+}
+
+/* Hover effect */
+.stat-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--accent);
+    box-shadow: 0 14px 36px var(--accent-glow);
+}
+
+/* Headline text — unified across all cards */
+.stat-number {
+    font-size: 2.35rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 14px;
+    line-height: 1.15;
+    letter-spacing: 0.3px;
+    word-break: keep-all;
+    white-space: normal;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Subtitle text — consistent and readable */
+.stat-label {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    letter-spacing: 0.25px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Mobile balance */
+@media (max-width: 768px) {
+    .stat-number {
+        font-size: 2.05rem;
+    }
+}
+
+
+
+        /* Contact */
+        .contact-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-content p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            padding: 15px 30px;
+            background: var(--card-bg);
+            border-radius: 50px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-link:hover {
+            background: var(--accent);
+            color: var(--bg-primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--accent-glow);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-secondary);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content .subtitle {
+                font-size: 1.2rem;
+            }
+
+            nav ul {
+                gap: 15px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .projects-grid,
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-card.featured {
+                grid-column: span 1;
+            }
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(0, 212, 255, 0.2);
+            color: var(--accent);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin: 5px 5px 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="#" class="logo">Simar Saka</a>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="about">
+        <div class="hero-content">
+            <div class="profile-image"><img src="cs.avif" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
+            <h1>Simar Saka</h1>
+            <p class="subtitle">Computer Science Engineer</p>
+            <p class="description">
+                Turning data into decisions, models into systems, and bugs into lessons.
+                I work on machine learning and AI, where progress is measured in loss curves and persistence.
+                I build AI systems, debug their mistakes, and learn something new every time they surprise me.
+                 I spend my time teaching machines to learn patterns and myself to understand their failures.
+
+            </p>
+            <div class="cta-buttons">
+                <a href="#contact" class="btn btn-primary">Get In Touch</a>
+                <a href="#projects" class="btn btn-secondary">View My Work</a>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Experience Section -->
+<section id="experience">
+    <div class="container">
+        <h2 class="section-title">Experience</h2>
+        <div class="experience-grid">
+
+            <!-- IIT Roorkee -->
+            <div class="experience-card">
+                <div class="experience-header">
+                    <div>
+                        <h3 class="experience-title">AI/ML Research Intern</h3>
+                        <p class="experience-company">IIT Roorkee, Uttarakhand</p>
+                    </div>
+                    
+                </div>
+                <ul>
+                    <li>Developed advanced UAV drone video stabilization pipeline for accurate vehicle trajectory prediction and road safety analysis</li>
+                    <li>Implemented ORB-based feature detection with adaptive region masking to handle dynamic backgrounds (swaying trees, moving vehicles, reflective water surfaces)</li>
+                    <li>Designed motion outlier removal system using Median Absolute Deviation (MAD) to filter unstable features and ensure accurate camera motion estimation</li>
+                    <li>Built homography-based motion estimation and adaptive smoothing algorithm that responds to scene dynamics</li>
+                    <li>Achieved 57% reduction in motion jitter for complex dynamic scenes, matching/outperforming Adobe Premiere Pro's Warp Stabilizer</li>
+                    <li>Enabled precise Time-to-Collision (TTC) and safety metric calculations for traffic analysis applications</li>
+                </ul>
+                <div style="margin-top: 15px;">
+                    <span class="badge">Computer Vision</span>
+                    <span class="badge">OpenCV</span>
+                    <span class="badge">ORB Features</span>
+                    <span class="badge">Homography</span>
+                    <span class="badge">Video Stabilization</span>
+                    <span class="badge">UAV Analysis</span>
+                </div>
+            </div>
+
+            <!-- CodeVeda Technologies -->
+            <div class="experience-card">
+                <div class="experience-header">
+                    <div>
+                        <h3 class="experience-title">Data Analysis Intern</h3>
+                        <p class="experience-company">CodeVeda Technologies, Pune</p>
+                    </div>
+                   
+                </div>
+                <ul>
+                    <li>Worked on a real-world transportation safety analytics project analysing roundabout risk perception using large-scale survey data</li>
+                    <li>Processed and cleaned structured questionnaire data collected via Google Forms, converting raw responses into analysis-ready datasets</li>
+                    <li>Designed and implemented nominal and ordinal encoding schemes for demographic, behavioural, and risk-related variables</li>
+                    <li>Performed exploratory data analysis (EDA) to identify safety perception trends across age groups, vehicle categories, and driving experience</li>
+                    <li>Built and trained a TabTransformer-based deep learning model to capture complex feature interactions in categorical-heavy survey data</li>
+                    <li>Executed long-horizon training (1000 epochs) to assess learning stability and predictive performance</li>
+                    <li>Generated data-driven insights to support traffic safety evaluation and infrastructure planning recommendations</li>
+                </ul>
+                <div style="margin-top: 15px;">
+                    <span class="badge">Data Analysis</span>
+                    <span class="badge">Python</span>
+                    <span class="badge">Pandas</span>
+                    <span class="badge">Excel</span>
+                    <span class="badge">Survey Analytics</span>
+                    <span class="badge">TabTransformer</span>
+                    <span class="badge">Machine Learning</span>
+                </div>
+            </div>
+
+            <!-- Technical Society -->
+            <div class="experience-card">
+                <div class="experience-header">
+                    <div>
+                        <h3 class="experience-title">Joint Secretary</h3>
+                        <p class="experience-company">Technical Society, Panjab University</p>
+                    </div>
+                    
+                </div>
+                <ul>
+                    <li>Contributed to 5+ technical events, workshops, and hackathons</li>
+                    <li>Mentored 50+ first-year students in C, C++, and Data Structures & Algorithms</li>
+                    <li>Delivered programming guidance and hosted 10+ peer-group coding practice sessions</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+ <!-- Projects Section -->
+<!-- Projects Section -->
+<section id="projects">
+    <div class="container">
+        <h2 class="section-title">Featured Projects</h2>
+
+        <div class="projects-grid">
+
+            <!-- UAV Project -->
+            <div class="project-card featured">
+                <div class="project-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    🎯
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">UAV Drone Video Stabilization System</h3>
+                    <p class="project-description"><strong>Research Project at IIT Roorkee</strong></p>
+
+                    <ul style="padding-left:18px;">
+                        <li>Designed a full-frame UAV video stabilization pipeline for vehicle trajectory prediction, Time-to-Collision (TTC) estimation, and road safety analytics</li>
+                        <li>Separated camera ego-motion from object motion using robust feature tracking and global motion estimation</li>
+                        <li>Implemented ORB-based feature detection with adaptive region masking to suppress trees, water reflections, and moving vehicles</li>
+                        <li>Applied Median Absolute Deviation (MAD)–based outlier rejection for stable feature correspondence</li>
+                        <li>Estimated camera motion using homography and applied adaptive temporal smoothing</li>
+                        <li>Achieved <strong>57%</strong> reduction in motion jitter, matching / outperforming Adobe Premiere Pro’s Warp Stabilizer</li>
+                    </ul>
+
+                    <span class="badge">OpenCV</span>
+                    <span class="badge">ORB Features</span>
+                    <span class="badge">Homography</span>
+                    <span class="badge">Outlier Rejection</span>
+                    <span class="badge">Python</span>
+                    <span class="badge">Traffic Analytics</span>
+                </div>
+            </div>
+
+            <!-- TabTransformer -->
+            <div class="project-card">
+                <div class="project-image" style="background: linear-gradient(135deg, #8360c3 0%, #2ebf91 100%);">
+                    📊
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Roundabout Risk Perception Modelling using TabTransformer</h3>
+
+                    <ul style="padding-left:18px;">
+                        <li>Developed an end-to-end tabular deep learning pipeline using survey data collected via Google Forms</li>
+                        <li>Worked with categorical-heavy features including demographics, driving behaviour, vehicle type, and infrastructure attributes</li>
+                        <li>Captured risk perception using <strong>Likert-scale responses (1–5)</strong> across roundabout entry, circulation, and exit phases</li>
+                        <li>Implemented nominal and ordinal encoding strategies for structured survey variables</li>
+                        <li>Trained a <strong>TabTransformer model for 1000 epochs</strong> to learn high-order feature interactions via categorical embeddings</li>
+                        <li>Focused on convergence stability, representation learning, and robustness on low-sample tabular data</li>
+                    </ul>
+
+                    <span class="badge">TabTransformer</span>
+                    <span class="badge">Categorical Embeddings</span>
+                    <span class="badge">Self-Attention</span>
+                    <span class="badge">Feature Engineering</span>
+                    <span class="badge">Python</span>
+                    <span class="badge">Pandas</span>
+                </div>
+            </div>
+
+            <!-- LeafGuard -->
+            <div class="project-card">
+                <div class="project-image" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
+                    🌿
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">LeafGuard: Deep Learning–Based Plant Disease Detection</h3>
+
+                    <ul style="padding-left:18px;">
+                        <li>Designed and trained a CNN-based image classification model for automated plant disease detection</li>
+                        <li>Trained on <strong>54,305 high-resolution leaf images</strong> spanning <strong>38 disease classes</strong></li>
+                        <li>Applied image normalization, resizing, and data augmentation to improve generalization</li>
+                        <li>Used multi-class softmax classification to distinguish visually similar disease patterns</li>
+                        <li>Demonstrated applicability of deep learning for scalable agricultural decision-support systems</li>
+                    </ul>
+
+                    <span class="badge">PyTorch</span>
+                    <span class="badge">CNN</span>
+                    <span class="badge">Image Augmentation</span>
+                    <span class="badge">Computer Vision</span>
+                </div>
+            </div>
+
+            <!-- SecurePass -->
+            <div class="project-card">
+                <div class="project-image" style="background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);">
+                    🔐
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">SecurePass: Authentication & Encryption System</h3>
+
+                    <ul style="padding-left:18px;">
+                        <li>Developed a secure authentication system in C++ focusing on credential protection and access control</li>
+                        <li>Encrypted user passwords using Caesar cipher–based transformations prior to storage</li>
+                        <li>Integrated a MySQL backend for persistent credential management</li>
+                        <li>Optimized query execution and validation logic to achieve login latency below <strong>0.98 seconds</strong></li>
+                        <li>Demonstrated core concepts in authentication workflows and database-backed system design</li>
+                    </ul>
+
+                    <span class="badge">C++</span>
+                    <span class="badge">MySQL</span>
+                    <span class="badge">Encryption</span>
+                    <span class="badge">Authentication Systems</span>
+                </div>
+            </div>
+
+            <!-- Resume Filter -->
+            <div class="project-card">
+                <div class="project-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    📄
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Keyword-Based Resume Filtering System</h3>
+
+                    <ul style="padding-left:18px;">
+                        <li>Built a Python-based automated resume screening tool with a Tkinter graphical interface</li>
+                        <li>Implemented text preprocessing, keyword extraction, and rule-based filtering</li>
+                        <li>Matched resumes against job-specific skill requirements for faster shortlisting</li>
+                        <li>Reduced manual resume screening time by approximately <strong>50%</strong></li>
+                        <li>Demonstrated practical application of text processing and workflow automation</li>
+                    </ul>
+
+                    <span class="badge">Python</span>
+                    <span class="badge">Tkinter</span>
+                    <span class="badge">Text Processing</span>
+                    <span class="badge">Automation</span>
+                </div>
+            </div>
+
+            <!-- Voice Assistant -->
+            <div class="project-card">
+                <div class="project-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                    🎤
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Voice-Enabled Web Assistant</h3>
+
+                    <ul style="padding-left:18px;">
+                        <li>Developed a voice-controlled web application using browser-based speech recognition</li>
+                        <li>Implemented intent handling, command parsing, and UI feedback loops</li>
+                        <li>Enabled hands-free interaction for common user tasks through voice commands</li>
+                        <li>Conducted usability testing with <strong>20+ users</strong>, achieving <strong>95%</strong> satisfaction</li>
+                        <li>Demonstrated principles of human–computer interaction and responsive web design</li>
+                    </ul>
+
+                    <span class="badge">JavaScript</span>
+                    <span class="badge">PHP</span>
+                    <span class="badge">Speech API</span>
+                    <span class="badge">Web Applications</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Skills Section -->
+<section id="skills">
+    <div class="container">
+        <h2 class="section-title">Skills & Technologies</h2>
+        <div class="skills-grid">
+
+            <div class="skill-category">
+                <div class="skill-icon">💻</div>
+                <h3>Programming Languages</h3>
+                <ul>
+                    <li>C / C++ (STL, OOP)</li>
+                    <li>Python</li>
+                    <li>R</li>
+                    <li>JavaScript</li>
+                    <li>Object-Oriented Programming</li>
+                    <li>Problem Solving (DSA)</li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <div class="skill-icon">🤖</div>
+                <h3>AI/ML & Data Science</h3>
+                <ul>
+                    <li>PyTorch & TensorFlow</li>
+                    <li>Computer Vision</li>
+                    <li>Deep Learning</li>
+                    <li>NumPy, Pandas, Matplotlib</li>
+                    <li>Statistics & Linear Algebra</li>
+                    <li>TabTransformer Models</li>
+                    <li>Exploratory Data Analysis (EDA)</li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <div class="skill-icon">🌐</div>
+                <h3>Web Development</h3>
+                <ul>
+                    <li>HTML, CSS, JavaScript</li>
+                    <li>React</li>
+                    <li>PHP</li>
+                    <li>Responsive Design</li>
+                    <li>Frontend–Backend Integration</li>
+                    <li>UI/UX Fundamentals</li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <div class="skill-icon">🗄️</div>
+                <h3>Data & Databases</h3>
+                <ul>
+                    <li>SQL & MySQL</li>
+                    <li>Excel</li>
+                    <li>Data Analysis</li>
+                    <li>DBMS</li>
+                    <li>Data Cleaning & Preprocessing</li>
+                    <li>Survey & Questionnaire Data</li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <div class="skill-icon">⚙️</div>
+                <h3>Computer Science</h3>
+                <ul>
+                    <li>Data Structures & Algorithms</li>
+                    <li>Operating Systems</li>
+                    <li>Computer Networks</li>
+                    <li>Algorithms</li>
+                    <li>Software Engineering</li>
+                    <li>Database Management Systems</li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <div class="skill-icon">📚</div>
+                <h3>Libraries & Frameworks</h3>
+                <ul>
+                    <li>C++ STL</li>
+                    <li>PyTorch</li>
+                    <li>TensorFlow</li>
+                    <li>OpenCV</li>
+                    <li>Pandas & NumPy</li>
+                    <li>Matplotlib</li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <div class="skill-icon">🛠️</div>
+                <h3>Tools & Developer Workflow</h3>
+                <ul>
+                    <li>Git & GitHub</li>
+                    <li>Jupyter Notebooks</li>
+                    <li>VS Code</li>
+                    <li>Google Forms</li>
+                    <li>Model Experimentation</li>
+                    <li>Debugging & Profiling</li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <div class="skill-icon">🏆</div>
+                <h3>Achievements</h3>
+                <ul>
+                    <li>Top 1% CS Student (CGPA 9.24)</li>
+                    <li>Flipkart GRiD 7.0 Semifinalist</li>
+                    <li>NPTEL Deep Learning (Top 5%)</li>
+                    <li>400+ DSA Problems Solved</li>
+                    <li>Gold Medalist (Athletics)</li>
+                    <li>NCC ‘A’ Certificate</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+   <!-- Contact Section -->
+<section id="contact">
+    <div class="container">
+        <h2 class="section-title">Contact</h2>
+
+        <div class="contact-content">
+            <p>
+                Always happy to connect!<br> Whether it’s about building something meaningful, exchanging ideas, or exploring interesting opportunities together.
+
+            </p>
+
+            <div class="contact-links">
+
+                <!-- Email -->
+                <a href="mailto:simarsaka@gmail.com" class="contact-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z"
+                              stroke="currentColor" stroke-width="2"/>
+                        <path d="M22 6L12 13L2 6"
+                              stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <span>simarsaka@gmail.com</span>
+                </a>
+
+                <!-- LinkedIn -->
+                <a href="https://www.linkedin.com/in/simar-saka-093ab4290/?originalSubdomain=in"
+                   target="_blank"
+                   class="contact-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16 8C18.2091 8 20 9.79086 20 12V21H16V12C16 10.8954 15.1046 10 14 10C12.8954 10 12 10.8954 12 12V21H8V12C8 9.79086 9.79086 8 12 8H16Z"
+                              stroke="currentColor" stroke-width="2"/>
+                        <rect x="2" y="9" width="4" height="12"
+                              stroke="currentColor" stroke-width="2"/>
+                        <circle cx="4" cy="4" r="2"
+                                stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <span>LinkedIn</span>
+                </a>
+
+            </div>
+        </div>
+    </div>
+</section>
+
