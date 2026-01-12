@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -297,70 +298,147 @@
     }
 
     /* Projects */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 30px;
-      width: 100%;
-    }
+ /* Projects (Experience-style) */
+.projects-grid{
+  display:grid;
+  gap:30px;
+}
 
-    .project-card {
-      background: var(--card-bg);
-      border-radius: 15px;
-      overflow: hidden;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(0, 212, 255, 0.1);
-      transition: all 0.3s;
-      width: 100%;
-    }
+/* Same vibe as .experience-card */
+.project-card{
+  background: var(--card-bg);
+  border-radius: 15px;
+  padding: 30px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 212, 255, 0.1);
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
 
-    .project-card.featured { grid-column: 1 / -1; }
+/* Accent bar like Experience */
+.project-card::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:0;
+  width:5px;
+  height:100%;
+  background: var(--accent);
+  transform: scaleY(0);
+  transition: transform 0.3s;
+}
 
-    .project-image {
-      width: 100%;
-      height: 240px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 4rem;
-      position: relative;
-      overflow: hidden;
-    }
+.project-card:hover::before{ transform: scaleY(1); }
 
-    .project-card.featured .project-image { height: 320px; }
+.project-card:hover{
+  transform: translateY(-5px);
+  border-color: var(--accent);
+  box-shadow: 0 10px 30px var(--accent-glow);
+}
 
-    .project-image::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-      transition: left 0.5s;
-    }
+/* Project header row */
+.project-header{
+  display:flex;
+  align-items:flex-start;
+  gap:14px;
+  margin-bottom: 18px;
+}
 
-    .project-card:hover .project-image::before { left: 100%; }
+.project-icon{
+  width:46px;
+  height:46px;
+  flex:0 0 46px;
+  border-radius: 12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(0, 212, 255, 0.18);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
 
-    .project-content { padding: 30px; }
+.project-icon svg{
+  width:24px;
+  height:24px;
+  stroke:#ffffff;
+  stroke-width:2.4;
+  fill:none;
+  opacity:0.95;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
 
-    .project-card:hover {
-      transform: translateY(-10px);
-      border-color: var(--accent);
-      box-shadow: 0 15px 40px var(--accent-glow);
-    }
+.project-title{
+  font-size:1.5rem;
+  color: var(--accent);
+  margin:0 0 6px 0;
+  line-height:1.2;
+}
 
-    .project-title {
-      font-size: 1.4rem;
-      color: var(--accent);
-      margin-bottom: 15px;
-    }
+.project-meta{
+  color: var(--text-secondary);
+  font-size:0.95rem;
+  margin:0;
+}
 
-    .project-description {
-      color: var(--text-secondary);
-      margin-bottom: 20px;
-      line-height: 1.6;
-    }
+/* Lists like Experience */
+.project-card ul{
+  list-style:none;
+  padding-left:0;
+  margin-top: 10px;
+}
+
+.project-card li{
+  padding-left:25px;
+  margin-bottom:10px;
+  position:relative;
+  color: var(--text-secondary);
+}
+
+.project-card li::before{
+  content:"▹";
+  position:absolute;
+  left:0;
+  color: var(--accent);
+}
+
+/* Remove old banner image blocks completely */
+.project-image{ display:none !important; }
+.project-card.featured{ grid-column: auto; } /* no special layout */
+/* ===== Immersive left-slide reveal ===== */
+
+.project-card{
+  /* hidden state */
+  opacity: 0;
+  transform: translate3d(-90px, 0, 0) scale(0.96);
+  filter: blur(10px);
+
+  transition:
+    opacity 1100ms ease,
+    transform 1200ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 1100ms ease;
+
+  will-change: opacity, transform, filter;
+}
+
+/* visible state */
+.project-card.is-visible{
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce){
+  .project-card{
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+}
+
 
     /* Skills */
     .skills-grid {
@@ -935,163 +1013,246 @@
 </section>
 
 
- <!-- Projects Section -->
-<!-- Projects Section -->
+          
+<!-- =========================
+     Projects Section (HTML)
+     ========================= -->
 <section id="projects">
-    <div class="container">
-        <h2 class="section-title">Featured Projects</h2>
+  <div class="container">
+    <h2 class="section-title">Featured Projects</h2>
 
-        <div class="projects-grid">
+    <div class="projects-grid">
 
-            <!-- UAV Project -->
-            <div class="project-card featured">
-                <div class="project-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                    🎯
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">UAV Drone Video Stabilization System</h3>
-                    <p class="project-description"><strong>Research Project at IIT Roorkee</strong></p>
+      <!-- UAV Project -->
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon">
+            <!-- Stabilization / Target -->
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="8"></circle>
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M12 2v3M22 12h-3M12 22v-3M2 12h3"></path>
+            </svg>
+          </div>
 
-                    <ul style="padding-left:18px;">
-                        <li>Designed a full-frame UAV video stabilization pipeline for vehicle trajectory prediction, Time-to-Collision (TTC) estimation, and road safety analytics</li>
-                        <li>Separated camera ego-motion from object motion using robust feature tracking and global motion estimation</li>
-                        <li>Implemented ORB-based feature detection with adaptive region masking to suppress trees, water reflections, and moving vehicles</li>
-                        <li>Applied Median Absolute Deviation (MAD)–based outlier rejection for stable feature correspondence</li>
-                        <li>Estimated camera motion using homography and applied adaptive temporal smoothing</li>
-                        <li>Achieved <strong>57%</strong> reduction in motion jitter, matching / outperforming Adobe Premiere Pro’s Warp Stabilizer</li>
-                    </ul>
-
-                    <span class="badge">OpenCV</span>
-                    <span class="badge">ORB Features</span>
-                    <span class="badge">Homography</span>
-                    <span class="badge">Outlier Rejection</span>
-                    <span class="badge">Python</span>
-                    <span class="badge">Traffic Analytics</span>
-                </div>
-            </div>
-
-            <!-- TabTransformer -->
-            <div class="project-card">
-                <div class="project-image" style="background: linear-gradient(135deg, #8360c3 0%, #2ebf91 100%);">
-                    📊
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">Roundabout Risk Perception Modelling using TabTransformer</h3>
-
-                    <ul style="padding-left:18px;">
-                        <li>Developed an end-to-end tabular deep learning pipeline using survey data collected via Google Forms</li>
-                        <li>Worked with categorical-heavy features including demographics, driving behaviour, vehicle type, and infrastructure attributes</li>
-                        <li>Captured risk perception using <strong>Likert-scale responses (1–5)</strong> across roundabout entry, circulation, and exit phases</li>
-                        <li>Implemented nominal and ordinal encoding strategies for structured survey variables</li>
-                        <li>Trained a <strong>TabTransformer model for 1000 epochs</strong> to learn high-order feature interactions via categorical embeddings</li>
-                        <li>Focused on convergence stability, representation learning, and robustness on low-sample tabular data</li>
-                    </ul>
-
-                    <span class="badge">TabTransformer</span>
-                    <span class="badge">Categorical Embeddings</span>
-                    <span class="badge">Self-Attention</span>
-                    <span class="badge">Feature Engineering</span>
-                    <span class="badge">Python</span>
-                    <span class="badge">Pandas</span>
-                </div>
-            </div>
-
-            <!-- LeafGuard -->
-            <div class="project-card">
-                <div class="project-image" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
-                    🌿
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">LeafGuard: Deep Learning–Based Plant Disease Detection</h3>
-
-                    <ul style="padding-left:18px;">
-                        <li>Designed and trained a CNN-based image classification model for automated plant disease detection</li>
-                        <li>Trained on <strong>54,305 high-resolution leaf images</strong> spanning <strong>38 disease classes</strong></li>
-                        <li>Applied image normalization, resizing, and data augmentation to improve generalization</li>
-                        <li>Used multi-class softmax classification to distinguish visually similar disease patterns</li>
-                        <li>Demonstrated applicability of deep learning for scalable agricultural decision-support systems</li>
-                    </ul>
-
-                    <span class="badge">PyTorch</span>
-                    <span class="badge">CNN</span>
-                    <span class="badge">Image Augmentation</span>
-                    <span class="badge">Computer Vision</span>
-                </div>
-            </div>
-
-            <!-- SecurePass -->
-            <div class="project-card">
-                <div class="project-image" style="background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);">
-                    🔐
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">SecurePass: Authentication & Encryption System</h3>
-
-                    <ul style="padding-left:18px;">
-                        <li>Developed a secure authentication system in C++ focusing on credential protection and access control</li>
-                        <li>Encrypted user passwords using Caesar cipher–based transformations prior to storage</li>
-                        <li>Integrated a MySQL backend for persistent credential management</li>
-                        <li>Optimized query execution and validation logic to achieve login latency below <strong>0.98 seconds</strong></li>
-                        <li>Demonstrated core concepts in authentication workflows and database-backed system design</li>
-                    </ul>
-
-                    <span class="badge">C++</span>
-                    <span class="badge">MySQL</span>
-                    <span class="badge">Encryption</span>
-                    <span class="badge">Authentication Systems</span>
-                </div>
-            </div>
-
-            <!-- Resume Filter -->
-            <div class="project-card">
-                <div class="project-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                    📄
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">Keyword-Based Resume Filtering System</h3>
-
-                    <ul style="padding-left:18px;">
-                        <li>Built a Python-based automated resume screening tool with a Tkinter graphical interface</li>
-                        <li>Implemented text preprocessing, keyword extraction, and rule-based filtering</li>
-                        <li>Matched resumes against job-specific skill requirements for faster shortlisting</li>
-                        <li>Reduced manual resume screening time by approximately <strong>50%</strong></li>
-                        <li>Demonstrated practical application of text processing and workflow automation</li>
-                    </ul>
-
-                    <span class="badge">Python</span>
-                    <span class="badge">Tkinter</span>
-                    <span class="badge">Text Processing</span>
-                    <span class="badge">Automation</span>
-                </div>
-            </div>
-
-            <!-- Voice Assistant -->
-            <div class="project-card">
-                <div class="project-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-                    🎤
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">Voice-Enabled Web Assistant</h3>
-
-                    <ul style="padding-left:18px;">
-                        <li>Developed a voice-controlled web application using browser-based speech recognition</li>
-                        <li>Implemented intent handling, command parsing, and UI feedback loops</li>
-                        <li>Enabled hands-free interaction for common user tasks through voice commands</li>
-                        <li>Conducted usability testing with <strong>20+ users</strong>, achieving <strong>95%</strong> satisfaction</li>
-                        <li>Demonstrated principles of human–computer interaction and responsive web design</li>
-                    </ul>
-
-                    <span class="badge">JavaScript</span>
-                    <span class="badge">PHP</span>
-                    <span class="badge">Speech API</span>
-                    <span class="badge">Web Applications</span>
-                </div>
-            </div>
-
+          <div>
+            <h3 class="project-title">UAV Drone Video Stabilization System</h3>
+            <p class="project-meta"><strong>Research Project</strong> • IIT Roorkee</p>
+          </div>
         </div>
-      
+
+        <ul>
+          <li>Designed a full-frame UAV video stabilization pipeline for vehicle trajectory prediction, Time-to-Collision (TTC) estimation, and road safety analytics</li>
+          <li>Separated camera ego-motion from object motion using robust feature tracking and global motion estimation</li>
+          <li>Implemented ORB-based feature detection with adaptive region masking to suppress trees, water reflections, and moving vehicles</li>
+          <li>Applied Median Absolute Deviation (MAD)–based outlier rejection for stable feature correspondence</li>
+          <li>Estimated camera motion using homography and applied adaptive temporal smoothing</li>
+          <li>Achieved <strong>57%</strong> reduction in motion jitter, matching / outperforming Adobe Premiere Pro’s Warp Stabilizer</li>
+        </ul>
+
+        <div style="margin-top: 15px;">
+          <span class="badge">OpenCV</span>
+          <span class="badge">ORB Features</span>
+          <span class="badge">Homography</span>
+          <span class="badge">Outlier Rejection</span>
+          <span class="badge">Python</span>
+          <span class="badge">Traffic Analytics</span>
+        </div>
+      </div>
+
+      <!-- TabTransformer -->
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon">
+            <!-- Table + Attention -->
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3" y="4" width="10" height="16" rx="2"></rect>
+              
+
+              <circle cx="18" cy="8" r="1.6"></circle>
+              <circle cx="18" cy="12" r="1.6"></circle>
+              <circle cx="18" cy="16" r="1.6"></circle>
+
+              <line x1="13" y1="7" x2="16.5" y2="8"></line>
+              <line x1="13" y1="12" x2="16.5" y2="12"></line>
+              <line x1="13" y1="17" x2="16.5" y2="16"></line>
+            </svg>
+          </div>
+
+          <div>
+            <h3 class="project-title">Roundabout Risk Perception Modelling using TabTransformer</h3>
+            <p class="project-meta"><strong>Tabular Deep Learning</strong> • Survey Modelling</p>
+          </div>
+        </div>
+
+        <ul>
+          <li>Developed an end-to-end tabular deep learning pipeline using survey data collected via Google Forms</li>
+          <li>Worked with categorical-heavy features including demographics, driving behaviour, vehicle type, and infrastructure attributes</li>
+          <li>Captured risk perception using <strong>Likert-scale responses (1–5)</strong> across roundabout entry, circulation, and exit phases</li>
+          <li>Implemented nominal and ordinal encoding strategies for structured survey variables</li>
+          <li>Trained a <strong>TabTransformer model for 1000 epochs</strong> to learn high-order feature interactions via categorical embeddings</li>
+          <li>Focused on convergence stability, representation learning, and robustness on low-sample tabular data</li>
+        </ul>
+
+        <div style="margin-top: 15px;">
+          <span class="badge">TabTransformer</span>
+          <span class="badge">Categorical Embeddings</span>
+          <span class="badge">Self-Attention</span>
+          <span class="badge">Feature Engineering</span>
+          <span class="badge">Python</span>
+          <span class="badge">Pandas</span>
+        </div>
+      </div>
+
+      <!-- LeafGuard -->
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <!-- leaf outline -->
+    <path d="M20 4
+             C14 4, 8 7.5, 6 12
+             C4 16.5, 7 20, 12 20
+             C16.5 20, 20 16, 20 10
+             C20 7.5, 20 5.5, 20 4 Z"/>
+
+    
+  </svg>
+</div>
+
+
+
+          <div>
+            <h3 class="project-title">LeafGuard: Deep Learning–Based Plant Disease Detection</h3>
+            <p class="project-meta"><strong>Computer Vision</strong> • Multi-class Classification</p>
+          </div>
+        </div>
+
+        <ul>
+          <li>Designed and trained a CNN-based image classification model for automated plant disease detection</li>
+          <li>Trained on <strong>54,305 high-resolution leaf images</strong> spanning <strong>38 disease classes</strong></li>
+          <li>Applied image normalization, resizing, and data augmentation to improve generalization</li>
+          <li>Used multi-class softmax classification to distinguish visually similar disease patterns</li>
+          <li>Demonstrated applicability of deep learning for scalable agricultural decision-support systems</li>
+        </ul>
+
+        <div style="margin-top: 15px;">
+          <span class="badge">PyTorch</span>
+          <span class="badge">CNN</span>
+          <span class="badge">Image Augmentation</span>
+          <span class="badge">Computer Vision</span>
+        </div>
+      </div>
+
+      <!-- SecurePass -->
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon">
+            <!-- Shield / Lock -->
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 2l7 4v6c0 5-3 9-7 10C8 21 5 17 5 12V6l7-4Z"></path>
+              <path d="M9.5 12a2.5 2.5 0 0 1 5 0v2.5h-5V12Z"></path>
+              <path d="M10 14.5h4"></path>
+            </svg>
+          </div>
+
+          <div>
+            <h3 class="project-title">SecurePass: Authentication &amp; Encryption System</h3>
+            <p class="project-meta"><strong>C++</strong> • MySQL • Security</p>
+          </div>
+        </div>
+
+        <ul>
+          <li>Developed a secure authentication system in C++ focusing on credential protection and access control</li>
+          <li>Encrypted user passwords using Caesar cipher–based transformations prior to storage</li>
+          <li>Integrated a MySQL backend for persistent credential management</li>
+          <li>Optimized query execution and validation logic to achieve login latency below <strong>0.98 seconds</strong></li>
+          <li>Demonstrated core concepts in authentication workflows and database-backed system design</li>
+        </ul>
+
+        <div style="margin-top: 15px;">
+          <span class="badge">C++</span>
+          <span class="badge">MySQL</span>
+          <span class="badge">Encryption</span>
+          <span class="badge">Authentication Systems</span>
+        </div>
+      </div>
+
+      <!-- Resume Filter -->
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon">
+            <!-- File / Filter -->
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7 3h7l3 3v15H7V3Z"></path>
+              <path d="M14 3v4h4"></path>
+              <path d="M9 12h6"></path>
+              <path d="M9 16h4"></path>
+              <path d="M18.5 12l2 2-2 2"></path>
+            </svg>
+          </div>
+
+          <div>
+            <h3 class="project-title">Keyword-Based Resume Filtering System</h3>
+            <p class="project-meta"><strong>Python</strong> • PDF Parsing • Automation</p>
+          </div>
+        </div>
+
+        <ul>
+          <li>Built a Python-based automated resume screening tool with a Tkinter graphical interface</li>
+          <li>Implemented text preprocessing, keyword extraction, and rule-based filtering</li>
+          <li>Matched resumes against job-specific skill requirements for faster shortlisting</li>
+          <li>Reduced manual resume screening time by approximately <strong>50%</strong></li>
+          <li>Demonstrated practical application of text processing and workflow automation</li>
+        </ul>
+
+        <div style="margin-top: 15px;">
+          <span class="badge">Python</span>
+          <span class="badge">Tkinter</span>
+          <span class="badge">Text Processing</span>
+          <span class="badge">Automation</span>
+        </div>
+      </div>
+
+      <!-- Voice Assistant -->
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon">
+            <!-- Mic / Voice -->
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 14a3 3 0 0 0 3-3V7a3 3 0 0 0-6 0v4a3 3 0 0 0 3 3Z"></path>
+              <path d="M19 11a7 7 0 0 1-14 0"></path>
+              <path d="M12 18v3"></path>
+              <path d="M9 21h6"></path>
+            </svg>
+          </div>
+
+          <div>
+            <h3 class="project-title">Voice-Enabled Web Assistant</h3>
+            <p class="project-meta"><strong>Web</strong> • Speech Recognition • UX</p>
+          </div>
+        </div>
+
+        <ul>
+          <li>Developed a voice-controlled web application using browser-based speech recognition</li>
+          <li>Implemented intent handling, command parsing, and UI feedback loops</li>
+          <li>Enabled hands-free interaction for common user tasks through voice commands</li>
+          <li>Conducted usability testing with <strong>20+ users</strong>, achieving <strong>95%</strong> satisfaction</li>
+          <li>Demonstrated principles of human–computer interaction and responsive web design</li>
+        </ul>
+
+        <div style="margin-top: 15px;">
+          <span class="badge">JavaScript</span>
+          <span class="badge">PHP</span>
+          <span class="badge">Speech API</span>
+          <span class="badge">Web Applications</span>
+        </div>
+      </div>
+
     </div>
-  </section>
+  </div>
+</section>
+
 
   <!-- Contact -->
   <section id="contact">
@@ -1165,8 +1326,30 @@
       retina_detect: true
     });
   </script>
+  <script>
+  (function () {
+    const cards = document.querySelectorAll('#projects .project-card');
+    if (!cards.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target); // animate once
+        }
+      });
+    }, {
+      threshold: 0.2,
+      rootMargin: '0px 0px -15% 0px'
+    });
+
+    cards.forEach(card => observer.observe(card));
+  })();
+</script>
+
 </body>
 </html>
+
 
 
 
